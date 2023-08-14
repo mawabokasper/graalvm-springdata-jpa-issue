@@ -1,0 +1,1 @@
+create table voucher(id integer not null primary key auto_increment, msisdn varchar(10) not null, status integer not null,date_created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP);
