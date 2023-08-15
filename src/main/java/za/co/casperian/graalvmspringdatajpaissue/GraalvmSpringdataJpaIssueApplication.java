@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import za.co.casperian.graalvmspringdatajpaissue.domain.entity.Voucher;
 import za.co.casperian.graalvmspringdatajpaissue.domain.repository.VoucherRepository;
 
+import java.util.List;
+
 @SpringBootApplication
 @Slf4j
 public class GraalvmSpringdataJpaIssueApplication {
@@ -17,12 +19,16 @@ public class GraalvmSpringdataJpaIssueApplication {
 
 	@Bean
 	CommandLineRunner queryTop1(VoucherRepository voucherRepository){
+		java.lang.reflect.InvocationHandler a;
 		return new CommandLineRunner() {
 			@Override
 			public void run(String... args) throws Exception {
+				// count method works fine
 				log.debug("There are [{}] records in the table", voucherRepository.count());
-				Voucher voucher = voucherRepository.findTop1ByMsisdnAndStatusIsOrderByDateCreatedAsc("0810000000",0).orElse(null);
-				log.debug("We found the voucher - {}",voucher);
+
+				// Normal findByMsisdn also works
+				List<Voucher> voucherList = voucherRepository.findByMsisdn("0810000000");
+				log.debug("Here's the list of MSISDN " + voucherList);
 			}
 		};
 	}
